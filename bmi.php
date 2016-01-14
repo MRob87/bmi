@@ -9,14 +9,15 @@
 	        
         </script>
     </head>
-    <body>   
+    <body>
+	<h2>BMI Calculator</h2>
     	<!-- conversions -->
     	<table style="width:750px">
 	    	<tr>
 	    		<td colspan=2 style="background-color: #CCC">Height</td>
 	    	</tr>
 	    	<tr>
-	    		<td style="width:35%"><b>Ft-In (ex. 5-11, 5'11")</b></td>
+	    		<td style="width:35%"><b>Ft-In (ex. enter "5-11" for 5'11")</b></td>
 	    		<td style="width:65%"><input style="width:50px" data-bind="value: heightFtIn, valueUpdate: 'afterkeydown'" maxlength=5></td>
 	    	</tr>
 	    	<tr>
@@ -81,7 +82,7 @@
 	    		<td colspan=2>&nbsp;</td>
 	    	</tr>
 	    	<!-- Caloric needs -->
-	    	<tr><td colspan=2 style="background-color: #CCC">Total Estimate Calorie Need</td></tr>
+	    	<tr><td colspan=2 style="background-color: #CCC">Total Daily Estimate Calorie Need</td></tr>
 	    	<tr><td colspan=2>
 		    	<table style="width:100%;">
 			    	<tr>
@@ -89,17 +90,17 @@
 			    		<td style="width:10%;"><b>Male</b></td>
 			    		<td style="width:55%;"><b>Female</b></td>
 			    	<tr>
-			    		<td><b>Activity Factor 1.2</b></td>
+			    		<td><b>Activity Factor 1.2 (low activity)</b></td>
 			    		<td><span data-bind="text: maleActivityFactor2()"></td>
 			    		<td><span data-bind="text: femaleActivityFactor2()"></td>
 			    	</tr>
 			    	<tr>
-			    		<td><b>Activity Factor 1.3</b></td>
+			    		<td><b>Activity Factor 1.3 (medium activity)</b></td>
 			    		<td><span data-bind="text: maleActivityFactor3()"></td>
 			    		<td><span data-bind="text: femaleActivityFactor3()"></td>
 			    	</tr>
 			    	<tr>
-			    		<td><b>Activity Factor 1.4</b></td>
+			    		<td><b>Activity Factor 1.4 (high activity)</b></td>
 			    		<td><span data-bind="text: maleActivityFactor4()"></td>
 			    		<td><span data-bind="text: femaleActivityFactor4()"></td>
 			    	</tr>
@@ -109,7 +110,7 @@
 	    		<td colspan=2>&nbsp;</td>
 	    	</tr>
 	    	<!-- Protein needs -->
-	    	<tr><td colspan=4 style="background-color: #CCC">Total Protein Need</td></tr>
+	    	<tr><td colspan=4 style="background-color: #CCC">Total Daily Protein Need</td></tr>
 	    	<tr>
 	    		<td><b>0.8</b></td>
 	    		<td><span data-bind="text: proteinNeed1()"></span> g</td>
@@ -130,7 +131,7 @@
 	    		<td colspan=2>&nbsp;</td>
 	    	</tr>
 	    	<!-- Fluid needs -->
-	    	<tr><td colspan=4 style="background-color: #CCC">Total Fluid Need</td></tr>
+	    	<tr><td colspan=4 style="background-color: #CCC">Total Daily Fluid Need</td></tr>
 	    	<tr>
 	    		<td><b>CHF or renal disease: 25 mL/kg</b></td>
 	    		<td><span data-bind="text: (weightKg()*25).toFixed(0)"></span> mL</td>
