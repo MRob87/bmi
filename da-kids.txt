@@ -1,0 +1,37 @@
+------------
+-- first thing i want --
+ability to INPUT age in weeks months or years - show all equivalent values when only typing one value - ageDays(but don't show), ageWeeks, ageMonths, ageYEears
+INPUT - for number of days since last measurement - daysSinceLastMeasurement
+INPUT - adjusted age - used for calorie calculation - premature birth age - adjustedAge
+INPUT - length entered as cm and inch conversion = current and previous length - currentLengthCm, currentLengthIn, previousLengthCm, , previousLengthIn
+INPUT - weight entered as kg and lbs & ozs conversion = current and previous weight - currentWeightKg, currentWeightLb, previousWeightKg, , previousWeightLb
+
+Need to calculate how much weight they've gained since the last measurement (currentWeightKg - previousWeightKg) * 1000 / ageDays, (currentWeightLb - previousWeightLb)
+EQUATION grams per kilograms per day = (current kg minus previous kilograms) * 1000 / # of days since last measurement - gramsPerKgPerDay
+This number should be in a certain range (should be adjusted age):
+CALCULATE need to know actual grams per kilograms per day value from above ^
+preemie <2kg = 15-20 g/kg/day
+preemie >2kg = 20-30 g/kg/day
+0-4 months = 23-34 g/kg/day
+4-8 months = 10-16 g/kg/day
+8-12 months = 6-11 g/kg/day
+12-16 months = 5-9 g/kg/day
+16-24 months = 4-9 g/kg/day
+2-6 yrs = 2-3 g/kg/day
+
+------- growth charting --
+http://www.cdc.gov/growthcharts/percentile_data_files.htm
+http://www.who.int/childgrowth/standards/sft_wflh_girls_p/en/
+
+length by weight
+weight for age
+length for age
+if age > 2 years then use CDC growth chart, otherwise use WHO (World Health Organization)
+
+EXAMPLE:
+male
+20 months old
+13 kg
+80cm in length
+75th percentile weight for age
+10th percentile length for age

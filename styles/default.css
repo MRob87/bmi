@@ -1,0 +1,16 @@
+body {
+    font-family: "Times New Roman";
+    font-size: small;
+}
+#mainTable {
+    width: 750px;
+}
+#mainTable td {
+    text-align: center;
+}
+#mainTable .tableHeader {
+    background-color: #CCCCCC;
+}
+.smallInput {
+    width: 35px;
+}

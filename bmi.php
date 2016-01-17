@@ -4,13 +4,24 @@
         <title>BMI</title>
         <!-- data-main attribute tells require.js to load
              scripts/main.js after require.js loads. -->
-        <script data-main="bmi.js" src="js/require.js"></script>
+        <script data-main="js/bmi.js" src="/js/require.js"></script>
         <script type="text/javascript">
 	        
         </script>
     </head>
     <body>
-	<h2>BMI Calculator</h2>
+	<h2>BMI Calculator
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- BMI -->
+		<ins class="adsbygoogle"
+			 style="display:block"
+			 data-ad-client="ca-pub-1262623120215554"
+			 data-ad-slot="7729286223"
+			 data-ad-format="auto"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</h2>
     	<!-- conversions -->
     	<table style="width:750px">
 	    	<tr>
