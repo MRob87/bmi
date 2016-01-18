@@ -10,6 +10,7 @@ INPUT - adjusted age - used for calorie calculation - premature birth age - adju
 -- DONE
 
 INPUT - length entered as cm and inch conversion = current and previous length - currentLengthCm, currentLengthIn, previousLengthCm, previousLengthIn
+-- DONE
 
 INPUT - weight entered as kg and lbs & ozs conversion = current and previous weight - currentWeightKg, currentWeightLb, previousWeightKg, , previousWeightLb
 

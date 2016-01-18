@@ -59,9 +59,9 @@
 				</td><td>
 					<input type="text" class="smallInput" data-bind="value: daysSinceLastMeasurement, valueUpdate: 'afterkeydown'">
 				</td><td>
-					--
+					&nbsp;
 				</td><td>
-					--
+					&nbsp;
 				</td>
 			</tr>
 			<tr>
@@ -70,9 +70,31 @@
 				</td><td>
 					<input type="date" class="dateInput" data-bind="value: adjustedAge, valueUpdate: 'afterkeydown'">
 				</td><td>
-					--
+					&nbsp;
 				</td><td>
-					--
+					&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Current Length (cm):
+				</td><td>
+					<input type="text" id="currentLengthCm" class="smallInput" data-bind="value: currentLengthCm, valueUpdate: 'afterkeydown', calculateLength: 'currentLengthCm'">
+				</td><td>
+					Previous Length (cm):
+				</td><td>
+					<input type="text" id="previousLengthCm" class="smallInput" data-bind="value: previousLengthCm, valueUpdate: 'afterkeydown', calculateLength: 'previousLengthCm'">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Current Length (in):
+				</td><td>
+					<input type="text" id="currentLengthIn" class="smallInput" data-bind="value: currentLengthIn, valueUpdate: 'afterkeydown', calculateLength: 'currentLengthIn'">
+				</td><td>
+					Previous Length (in):
+				</td><td>
+					<input type="text" id="previousLengthIn" class="smallInput" data-bind="value: previousLengthIn, valueUpdate: 'afterkeydown', calculateLength: 'previousLengthIn'">
 				</td>
 			</tr>
 		</table>

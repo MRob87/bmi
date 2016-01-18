@@ -29,6 +29,10 @@ function (ko, $) {
 		self.birthdate = ko.observable();
 		self.daysSinceLastMeasurement = ko.observable();
 		self.adjustedAge = ko.observable();
+		self.currentLengthCm = ko.observable();
+		self.currentLengthIn = ko.observable();
+		self.previousLengthCm = ko.observable();
+		self.previousLengthIn = ko.observable();
 
 		function monthDiff(birthDate, currentDate) {
 			var months;
@@ -55,6 +59,15 @@ function (ko, $) {
 			return daydiff(birthDate, currentDate)/365;
 		}
 
+		// 1 cm = 0.393701 inches
+		function convertInToCm(inches) {
+			return (inches*2.54).toFixed(2);
+		}
+
+		function convertCmToIn(cm) {
+			return (cm*.393701).toFixed(2);
+		}
+
 		ko.bindingHandlers.calculateAge = {
 			update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
 				// This will be called once when the binding is first applied to an element,
@@ -78,6 +91,26 @@ function (ko, $) {
 			}
 		};
 
+		ko.bindingHandlers.calculateLength = {
+			update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+				// This will be called once when the binding is first applied to an element,
+				// and again whenever any observables/computeds that are accessed change
+				// Update the DOM element based on the supplied values here.
+				var key = valueAccessor();
+				var value = element.value;
+				if (key == '' || value == '' || isNaN(value)) return true;
+
+				if (key == 'currentLengthCm') {
+					self.currentLengthIn(convertCmToIn(value));
+				} else if (key == 'currentLengthIn') {
+					self.currentLengthCm(convertInToCm(value));
+				} else if (key == 'previousLengthCm') {
+					self.previousLengthIn(convertCmToIn(value));
+				} else if (key == 'previousLengthIn') {
+					self.previousLengthCm(convertInToCm(value));
+				}
+			}
+		};
 	};
 
 	ko.applyBindings(new viewModel());
