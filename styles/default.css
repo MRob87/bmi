@@ -2,14 +2,21 @@ body {
     font-family: "Times New Roman";
     font-size: small;
 }
-#mainTable {
+#mainTable, #resultsTable, #measurementTable {
     width: 750px;
+}
+#measurementTable td {
+    width: 25%;
+}
+#resultsTable td {
+    min-height: 50px;
+    text-align: center;
 }
 #mainTable td {
     text-align: center;
 }
 #mainTable .tableHeader {
-    background-color: #CCCCCC;
+    background-color: #009FAC;
 }
 .smallInput {
     width: 75px;
@@ -22,4 +29,9 @@ body {
 .calculateResults {
     max-width: 250px;
     width: 250px;
+}
+/*for rowspan=2*/
+.equalsSign {
+    font-family: "Courier New";
+    font-size: xx-large;
 }

@@ -27,6 +27,8 @@ function (ko, $) {
 		self.currentAgeYears = ko.observable();
 		self.currentChangedValue = ko.observable();
 		self.birthdate = ko.observable();
+		self.daysSinceLastMeasurement = ko.observable();
+		self.adjustedAge = ko.observable();
 
 		function monthDiff(birthDate, currentDate) {
 			var months;
