@@ -15,7 +15,10 @@
     	<!-- conversions -->
     	<table id="mainTable">
 	    	<tr>
-	    		<td colspan=5 class="tableHeader">Age</td>
+	    		<td colspan=5 class="tableHeader">Age
+					<br/>
+					<input type="date" id="birthdate" class="dateInput" data-bind="value: birthdate, valueUpdate: 'afterkeydown', calculateAge: 'birthdate'">
+				</td>
 			</tr>
 			<tr>
 				<td>Weeks</td>
@@ -25,16 +28,19 @@
 				<td>Years</td>
 			</tr>
 			<tr>
-				<td>
-					<input type="text" id="currentAgeWeeks" class="smallInput" data-bind="value: currentAgeWeeks, event: { focusout: calculateAgeEvent.bind($data, 'currentAgeWeeks') }">
+				<td class="calculateResults">
+					<!-- <input type="text" id="currentAgeWeeks" class="smallInput" data-bind="value: currentAgeWeeks, valueUpdate: 'afterkeydown', calculateAge: 'currentAgeWeeks'"> -->
+					<b><span data-bind="text: currentAgeWeeks"></span></b>
 				</td>
 				<td>=</td>
-				<td>
-					<input type="text" id="currentAgeMonths" class="smallInput" data-bind="value: currentAgeMonths, event: { focusout: calculateAgeEvent.bind($data, 'currentAgeMonths') }">
+				<td class="calculateResults">
+					<!-- <input type="text" id="currentAgeMonths" class="smallInput" data-bind="value: currentAgeMonths, valueUpdate: 'afterkeydown', calculateAge: 'currentAgeMonths'"> -->
+					<b><span data-bind="text: currentAgeMonths"></span></b>
 				</td>
 				<td>=</td>
-				<td>
-					<input type="text" id="currentAgeYears" class="smallInput" data-bind="value: currentAgeYears, event: { focusout: calculateAgeEvent.bind($data, 'currentAgeYears') }">
+				<td class="calculateResults">
+					<!-- <input type="text" id="currentAgeYears" class="smallInput" data-bind="value: currentAgeYears, valueUpdate: 'afterkeydown', calculateAge: 'currentAgeYears'"> -->
+					<b><span data-bind="text: currentAgeYears"></span></b>
 				</td>
 			</tr>
     	</table>

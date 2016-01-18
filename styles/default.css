@@ -12,5 +12,14 @@ body {
     background-color: #CCCCCC;
 }
 .smallInput {
-    width: 35px;
+    width: 75px;
+    min-height: 25px;
+}
+.dateInput {
+    width: 150px;
+    min-height: 25px;
+}
+.calculateResults {
+    max-width: 250px;
+    width: 250px;
 }
