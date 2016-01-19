@@ -16,6 +16,7 @@ body {
     text-align: center;
 }
 #mainTable .tableHeader {
+    color: #FFF;
     background-color: #009FAC;
 }
 .smallInput {
@@ -34,4 +35,9 @@ body {
 .equalsSign {
     font-family: "Courier New";
     font-size: xx-large;
+}
+.lineBreaker {
+    color: #FFF;
+    background-color: #009FAC;
+    text-align: center;
 }

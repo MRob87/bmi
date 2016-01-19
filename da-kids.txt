@@ -14,7 +14,7 @@ INPUT - length entered as cm and inch conversion = current and previous length -
 
 INPUT - weight entered as kg and lbs & ozs conversion = current and previous weight - currentWeightKg, currentWeightLb, previousWeightKg, , previousWeightLb
 
-
+INPUT - for adjustedAge make each value adjustable - adjustedAgeWeeks, adjustedAgeMonths, adjustedAgeYears
 
 Need to calculate how much weight they've gained since the last measurement (currentWeightKg - previousWeightKg) * 1000 / ageDays, (currentWeightLb - previousWeightLb)
 EQUATION grams per kilograms per day = (current kg minus previous kilograms) * 1000 / # of days since last measurement - gramsPerKgPerDay

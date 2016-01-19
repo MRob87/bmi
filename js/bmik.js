@@ -16,23 +16,50 @@ requirejs(['knockout', 'jquery'],
 function (ko, $) {
 
 	function viewModel() {
+		// for weight calc
+		ko.observable.fn.withPausing = function() {
+			this.notifySubscribers = function() {
+				if (!this.pauseNotifications) {
+					ko.subscribable.fn.notifySubscribers.apply(this, arguments);
+				}
+			};
+
+			this.sneakyUpdate = function(newValue) {
+				this.pauseNotifications = true;
+				this(newValue);
+				this.pauseNotifications = false;
+			};
+
+			return this;
+		};
+
 	    $("body").show();
 	    var self = this;
 
 		var keys = ['currentAgeWeeks', 'currentAgeMonths', 'currentAgeYears', 'currentAgeDays'];
 
+		// birthday - age
 		self.currentAgeDays = ko.observable();
 		self.currentAgeWeeks = ko.observable();
 		self.currentAgeMonths = ko.observable();
 		self.currentAgeYears = ko.observable();
 		self.currentChangedValue = ko.observable();
 		self.birthdate = ko.observable();
+		// custom
 		self.daysSinceLastMeasurement = ko.observable();
 		self.adjustedAge = ko.observable();
+		// length
 		self.currentLengthCm = ko.observable();
 		self.currentLengthIn = ko.observable();
 		self.previousLengthCm = ko.observable();
 		self.previousLengthIn = ko.observable();
+		// weight
+		self.currentWeightOzs = ko.observable().withPausing();
+		self.currentWeightLbs = ko.observable().withPausing();
+		self.currentWeightKg = ko.observable().withPausing();
+		self.previousWeightOzs = ko.observable().withPausing();
+		self.previousWeightLbs = ko.observable().withPausing();
+		self.previousWeightKg = ko.observable().withPausing();
 
 		function monthDiff(birthDate, currentDate) {
 			var months;
@@ -59,13 +86,60 @@ function (ko, $) {
 			return daydiff(birthDate, currentDate)/365;
 		}
 
-		// 1 cm = 0.393701 inches
 		function convertInToCm(inches) {
 			return (inches*2.54).toFixed(2);
 		}
 
 		function convertCmToIn(cm) {
 			return (cm*.393701).toFixed(2);
+		}
+
+		function convertKgToLbs(kg) {
+			return Math.floor((kg * 2.205));
+		}
+
+		function convertOzsToLbs (ozs) {
+			return Math.floor(ozs*0.0625).toFixed(0);
+		}
+
+		function convertKgToOzs(kg) {
+			return (kg * 35.274).toFixed(2);
+		}
+
+		function convertOzToKg(oz) {
+			return (oz / 35.274).toFixed(2);
+		}
+
+		function convertLbsToOzs(lbs) {
+			return (lbs * 16).toFixed(2);
+		}
+
+		function convertKgToLbsOzs(kg) {
+			var ozs = convertKgToOzs(kg);
+
+			// round down to get the remainder of ozs
+			var lbs = convertOzsToLbs(ozs);
+
+			var lbsozs = (ozs - convertLbsToOzs(lbs)).toFixed(2);
+
+			return lbs + '-' + lbsozs;
+		}
+
+		function convertLbsOzsToKg(key, value, weightOzs, weightLbs) {
+			var ozs = 0;
+			if (key == 'currentWeightLbs' || key == 'previousWeightLbs') {
+				ozs = convertLbsToOzs(value);
+				if (!isNaN(weightOzs)) {
+					ozs = parseInt(ozs) + parseInt(weightOzs);
+				}
+			} else if (key == 'currentWeightOzs' || key == 'previousWeightOzs') {
+				ozs = convertLbsToOzs(weightLbs);
+				if (!isNaN(value)) {
+					ozs = parseInt(ozs) + parseInt(value);
+				}
+			}
+
+			return convertOzToKg(ozs);
 		}
 
 		ko.bindingHandlers.calculateAge = {
@@ -108,6 +182,55 @@ function (ko, $) {
 					self.previousLengthIn(convertCmToIn(value));
 				} else if (key == 'previousLengthIn') {
 					self.previousLengthCm(convertInToCm(value));
+				}
+			}
+		};
+
+		var currentWeightKgCount = 0;
+		var currentWeightLbsOzsCount = 0;
+		var previousWeightKgCount = 0;
+		var previousWeightLbsOzsCount = 0;
+		ko.bindingHandlers.calculateWeight = {
+			update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+				// This will be called once when the binding is first applied to an element,
+				// and again whenever any observables/computeds that are accessed change
+				// Update the DOM element based on the supplied values here.
+				var key = valueAccessor();
+				var value = element.value;
+				if (key == '' || value == '' || isNaN(value)) return true;
+
+				// CURRENT
+				if (key == 'currentWeightKg' && currentWeightLbsOzsCount == 0) {
+					currentWeightKgCount++;
+					var lbsozs = convertKgToLbsOzs(value);
+					var arLbsOzs = lbsozs.split('-');
+					self.currentWeightOzs(arLbsOzs[1]);
+					self.currentWeightLbs(arLbsOzs[0]);
+					currentWeightLbsOzsCount = 0;
+				} else if (key == 'currentWeightKg' && currentWeightLbsOzsCount > 0 && currentWeightKgCount == 0) {
+					currentWeightLbsOzsCount = 0;
+				} else if ((key == 'currentWeightLbs' || key == 'currentWeightOzs') && currentWeightLbsOzsCount <= 1) {
+					currentWeightLbsOzsCount++;
+					self.currentWeightKg(convertLbsOzsToKg(key, value, self.currentWeightOzs(), self.currentWeightLbs()));
+					currentWeightKgCount = 0;
+				} else if ((key == 'currentWeightLbs' || key == 'currentWeightOzs') && currentWeightKgCount > 0) {
+					currentWeightKgCount = 0;
+				} // PREVIOUS
+				else if (key == 'previousWeightKg' && previousWeightLbsOzsCount == 0) {
+					previousWeightKgCount++;
+					var lbsozs = convertKgToLbsOzs(value);
+					var arLbsOzs = lbsozs.split('-');
+					self.previousWeightOzs(arLbsOzs[1]);
+					self.previousWeightLbs(arLbsOzs[0]);
+					previousWeightLbsOzsCount = 0;
+				} else if (key == 'previousWeightKg' && previousWeightLbsOzsCount > 0 && previousWeightKgCount == 0) {
+					previousWeightLbsOzsCount = 0;
+				} else if ((key == 'previousWeightLbs' || key == 'previousWeightOzs') && previousWeightLbsOzsCount <= 1) {
+					previousWeightLbsOzsCount++;
+					self.previousWeightKg(convertLbsOzsToKg(key, value, self.previousWeightOzs(), self.previousWeightLbs()));
+					previousWeightKgCount = 0;
+				} else if ((key == 'previousWeightLbs' || key == 'previousWeightOzs') && previousWeightKgCount > 0) {
+					previousWeightKgCount = 0;
 				}
 			}
 		};
