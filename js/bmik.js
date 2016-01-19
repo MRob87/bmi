@@ -60,6 +60,8 @@ function (ko, $) {
 		self.previousWeightOzs = ko.observable().withPausing();
 		self.previousWeightLbs = ko.observable().withPausing();
 		self.previousWeightKg = ko.observable().withPausing();
+		// calculated values
+		self.gramsPerKiloPerDay = ko.observable();
 
 		function monthDiff(birthDate, currentDate) {
 			var months;
@@ -234,6 +236,25 @@ function (ko, $) {
 				}
 			}
 		};
+
+		self.currentWeightKg.subscribe(function(currentWeightKg) {
+			var gramsPerKiloPerDay = parseInt(calculateGramsPerKiloPerDay(currentWeightKg, self.previousWeightKg(), self.daysSinceLastMeasurement()));
+			if (!isNaN(gramsPerKiloPerDay)) {
+				self.gramsPerKiloPerDay(gramsPerKiloPerDay);
+			}
+		});
+
+		self.previousWeightKg.subscribe(function(previousWeightKg) {
+			var gramsPerKiloPerDay = parseInt(calculateGramsPerKiloPerDay(self.currentWeightKg(), previousWeightKg, self.daysSinceLastMeasurement()));
+			if (!isNaN(gramsPerKiloPerDay)) {
+				self.gramsPerKiloPerDay(gramsPerKiloPerDay);
+			}
+		});
+
+		// (currentWeightKg - previousWeightKg) * 1000 / numberOfDaysSinceLast, (currentWeightLb - previousWeightLb)
+		function calculateGramsPerKiloPerDay(currentWeight, previousWeight, daysSinceLastMeasurement) {
+			return ((currentWeight - previousWeight) * 1000) / daysSinceLastMeasurement;
+		}
 	};
 
 	ko.applyBindings(new viewModel());
